@@ -19,6 +19,7 @@ def output_puzzle(): #Вывод таблицы с головоломкой
 			print('╟' + '─' * x + ('┼' + '─' * x) * (y - 1) + '╢')
 	print('╚' + '═' * x + ('╧' + '═' * x) * (y - 1) + '╝')
 
+
 def show_possibles(): #Вывод возможных значений (для отладки)
 	for i in range(X):
 		for j in range(X):
