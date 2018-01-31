@@ -258,6 +258,7 @@ while not puzzle.check_complete():
                             puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in area')
     else:
         break
+
 if not puzzle.check_complete():
     print('Решить головоломку не получилось, вот, что получилось найти:')
     puzzle.output_puzzle()
