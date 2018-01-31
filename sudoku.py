@@ -222,8 +222,8 @@ while not puzzle.check_complete():
     print(possibles_test)
     if puzzle.field != field_test or puzzle.possibles != possibles_test:
         input('222')
-        field_test = puzzle.field[:]
-        possibles_test = puzzle.possibles[:]
+        field_test = puzzle.field[:][:]
+        possibles_test = puzzle.possibles[:][:]
         print(puzzle.field)
         print(field_test)
         print(puzzle.possibles)
