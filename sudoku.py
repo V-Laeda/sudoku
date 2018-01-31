@@ -192,10 +192,10 @@ line = '0001 1000 0003 2000'
 # for i in line.split():
 #     arr.append(list(i))
 
-Arr1 = Puzzle(x, y, chars, line)
-Arr2 = Puzzle(1, 1, list('1'), '0')
+puzzle = Puzzle(x, y, chars, line)
+# Arr2 = Puzzle(1, 1, list('1'), '0')
 print('Головоломка:')
-Arr1.output_puzzle()
+puzzle.output_puzzle()
 # output_puzzle()
 # ПАУЗА ПЕРЕД ВЫВОДОМ ЛОГА
 # input('Enter для продолжения')
@@ -212,51 +212,65 @@ Arr1.output_puzzle()
 
 
 # for z in range(30):
-while not Arr1.check_complete():
+field_test = []
+possibles_test = []
+while not puzzle.check_complete():
     input('111')
-    if Arr1 != Arr2:
+    print(puzzle.field)
+    print(field_test)
+    print(puzzle.possibles)
+    print(possibles_test)
+    if puzzle.field != field_test or puzzle.possibles != possibles_test:
         input('222')
-        Arr2 = Arr1
-        #
-        for i in range(Arr1.size):
-            for j in range(Arr1.size):
-                if len(Arr1.possibles[i][j]) == 1:  # Проверка, что в ячейку можно поставить только одно значение
-                    Arr1.set_num(x_ins=i, y_ins=j, num_ins=Arr1.possibles[i][j].pop())
+        field_test = puzzle.field[:]
+        possibles_test = puzzle.possibles[:]
+        print(puzzle.field)
+        print(field_test)
+        print(puzzle.possibles)
+        print(possibles_test)
+        for i in range(puzzle.size):
+            for j in range(puzzle.size):
+                if len(puzzle.possibles[i][j]) == 1:  # Проверка, что в ячейку можно поставить только одно значение
+                    puzzle.set_num(x_ins=i, y_ins=j, num_ins=puzzle.possibles[i][j].pop())
                     # , rule_ins='only one num possible in cell')
                 for c in chars:
-                    if c in Arr1.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в строке
+                    if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в строке
                         b = False
-                        for l in range(Arr1.size):
+                        for l in range(puzzle.size):
                             if l != j:
-                                b = b or Arr1.possibles[i][l].issuperset(c)
+                                b = b or puzzle.possibles[i][l].issuperset(c)
                         if not b:
-                            Arr1.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in string')
-                    if c in Arr1.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в столбце
+                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in string')
+                    if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в столбце
                         b = False
-                        for l in range(Arr1.size):
+                        for l in range(puzzle.size):
                             if l != i:
-                                b = b or Arr1.possibles[l][j].issuperset(c)
+                                b = b or puzzle.possibles[l][j].issuperset(c)
                         if not b:
-                            Arr1.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in column')
-                    if c in Arr1.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в зоне x * y
+                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in column')
+                    if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в зоне x * y
                         b = False
                         for l in range(((i // y) * y), ((i // y + 1) * y)):
                             for m in range(((j // x) * x), ((j // x + 1) * x)):
                                 if l != i or j != m:
-                                    b = b or Arr1.possibles[l][m].issuperset(c)
+                                    b = b or puzzle.possibles[l][m].issuperset(c)
                         if not b:
-                            Arr1.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in area')
+                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in area')
     else:
         break
-if not Arr1.check_complete():
+if not puzzle.check_complete():
     print('Решить головоломку не получилось, вот, что получилось найти:')
-    Arr1.output_puzzle()
-    Arr1.show_possibles()
-    Arr2.output_puzzle()
-    Arr2.show_possibles()
+    puzzle.output_puzzle()
+    puzzle.show_possibles()
+    print(puzzle.field)
+    print(field_test)
+    print(puzzle.possibles)
+    print(possibles_test)
+    # Arr2.output_puzzle()
+    # Arr2.show_possibles()
 else:
     print('Головоломка решена! Ответ:')
-    Arr1.output_puzzle()
+    puzzle.output_puzzle()
 
 # print()
 # print('=====================================')
