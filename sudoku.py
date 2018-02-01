@@ -18,6 +18,7 @@
 #       (желательно наиболее заполненную) для повтора ветвления).
 #       Следует так же иметь в виду, что головолома может оказаться В ПРИНЦИПЕ нерешаемой,
 #       хотя и будет проходить обычные проверки.
+import copy
 
 
 class Puzzle:
@@ -51,12 +52,12 @@ class Puzzle:
                 print('\t\t\t\t\t//' + str(len(self.possibles[i][j])))
 
     def set_num(self, x_ins, y_ins, num_ins):
-        if self.field[x_ins][y_ins] != '0' or (num_ins not in self.possibles[x_ins][y_ins]):
-            self.output_puzzle()
-            print(self.field)
-            print(self.possibles)
-            print(x_ins, y_ins, num_ins)
-            exit('Puzzle has errors!')
+        # if self.field[x_ins][y_ins] != '0' or (num_ins not in self.possibles[x_ins][y_ins]):
+        #     self.output_puzzle()
+        #     print(self.field)
+        #     print(self.possibles)
+        #     print(x_ins, y_ins, num_ins)
+        #     exit('Puzzle has errors!')
         self.field[x_ins][y_ins] = num_ins
         self.possibles[x_ins][y_ins] = set()
         for i in range(self.size):
@@ -141,8 +142,8 @@ class Puzzle:
 #    if rule_ins != '':
 #        print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
-x, y, chars = 2, 2, list('1234')
-line = '0001 1000 0003 2000'
+#x, y, chars = 2, 2, list('1234')
+#line = '0001 1000 0003 2000'
 # line = '1000 0020 0300 0004'
 # line = '3020 0000 0000 0102'
 # line = '3000 0240 0320 0004'
@@ -156,11 +157,11 @@ line = '0001 1000 0003 2000'
 # line = '020000 001050 600310 013002 030600 000030'
 # line = '150004 000000 500043 340001 000000 200035'
 
-# x, y, chars = 3, 3, list('123456789')
+x, y, chars = 3, 3, list('123456789')
 # line = '000109000 085304670 096000210 000902000 700000003 000803000 048000160 073408590 000706000'
 # line = '409730102 020009600 010000390 000000021 000453000 680000000 051000030 006300010 904026805'
 # ˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅
-# line = '050047001 000000708 804601050 103700000 000405000 000002406 020503904 405000000 900260010'
+line = '050047001 000000708 804601050 103700000 000405000 000002406 020503904 405000000 900260010'
 # line = '359847001 000359748 874621359 143706000 000405100 500002406 020503904 405008000 900264010'
 # Более сложная головоломка.
 # Решение: 359847261 261359748 874621359 143796825 692485173 587132496 726513984 415978632 938264517
@@ -206,7 +207,6 @@ line = '0001 1000 0003 2000'
 #     arr.append(list(i))
 
 puzzle = Puzzle(x, y, chars, line)
-# Arr2 = Puzzle(1, 1, list('1'), '0')
 print('Головоломка:')
 puzzle.output_puzzle()
 # output_puzzle()
@@ -228,19 +228,9 @@ puzzle.output_puzzle()
 field_test = []
 possibles_test = []
 while not puzzle.check_complete():
-    input('111')
-    print(puzzle.field)
-    print(field_test)
-    print(puzzle.possibles)
-    print(possibles_test)
     if puzzle.field != field_test or puzzle.possibles != possibles_test:
-        input('222')
-        field_test = puzzle.field[:][:]
-        possibles_test = puzzle.possibles[:][:]
-        print(puzzle.field)
-        print(field_test)
-        print(puzzle.possibles)
-        print(possibles_test)
+        field_test = copy.deepcopy(puzzle.field)
+        possibles_test = copy.deepcopy(puzzle.possibles)
         for i in range(puzzle.size):
             for j in range(puzzle.size):
                 # Проверка, что в ячейку можно поставить только одно значение
@@ -277,11 +267,7 @@ while not puzzle.check_complete():
 if not puzzle.check_complete():
     print('Решить головоломку не получилось, вот, что получилось найти:')
     puzzle.output_puzzle()
-    puzzle.show_possibles()
-    print(puzzle.field)
-    print(field_test)
-    print(puzzle.possibles)
-    print(possibles_test)
+    # puzzle.show_possibles()
 else:
     print('Головоломка решена! Ответ:')
     puzzle.output_puzzle()
