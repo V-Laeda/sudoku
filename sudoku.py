@@ -27,7 +27,6 @@ class Puzzle:
         self.y = y
         self.size = x * y
         self.chars = chars
-        # self.line = line
         self.field = []
         for i in line.split():
             self.field.append(list(i))
@@ -233,35 +232,36 @@ while not puzzle.check_complete():
         possibles_test = copy.deepcopy(puzzle.possibles)
         for i in range(puzzle.size):
             for j in range(puzzle.size):
-                # Проверка, что в ячейку можно поставить только одно значение
-                if len(puzzle.possibles[i][j]) == 1:
-                    for c in puzzle.possibles[i][j]:
-                        puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)
-                        # , rule_ins='only one num possible in cell')
-                for c in chars:
+                for c in puzzle.possibles[i][j]:
+                    # Проверка, что в ячейку можно поставить только одно значение
+                    if len(puzzle.possibles[i][j]) == 1:
+                    # for c in puzzle.possibles[i][j]:
+                        puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one num possible in cell')
+                        continue
+                # for c in chars:
                     # Обнаружение единственного возможного места для цифры в строке
-                    if c in puzzle.possibles[i][j]:
-                        b = False
-                        for l in range(puzzle.size):
-                            if l != j:
-                                b = b or puzzle.possibles[i][l].issuperset(c)
-                        if not b:
-                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in string')
-                    if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в столбце
-                        b = False
-                        for l in range(puzzle.size):
-                            if l != i:
-                                b = b or puzzle.possibles[l][j].issuperset(c)
-                        if not b:
-                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in column')
-                    if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в зоне x * y
-                        b = False
-                        for l in range(((i // y) * y), ((i // y + 1) * y)):
-                            for m in range(((j // x) * x), ((j // x + 1) * x)):
-                                if l != i or j != m:
-                                    b = b or puzzle.possibles[l][m].issuperset(c)
-                        if not b:
-                            puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in area')
+                    # if c in puzzle.possibles[i][j]:
+                    b = False
+                    for l in range(puzzle.size):
+                        if l != j:
+                            b = b or puzzle.possibles[i][l].issuperset(c)
+                    if not b:
+                        puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in string')
+                    # if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в столбце
+                    b = False
+                    for l in range(puzzle.size):
+                        if l != i:
+                            b = b or puzzle.possibles[l][j].issuperset(c)
+                    if not b:
+                        puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in column')
+                    # if c in puzzle.possibles[i][j]:  # Обнаружение единственного возможного места для цифры в зоне x * y
+                    b = False
+                    for l in range(((i // y) * y), ((i // y + 1) * y)):
+                        for m in range(((j // x) * x), ((j // x + 1) * x)):
+                            if l != i or j != m:
+                                b = b or puzzle.possibles[l][m].issuperset(c)
+                    if not b:
+                        puzzle.set_num(x_ins=i, y_ins=j, num_ins=c)  # , rule_ins='only one place in area')
     else:
         break
 if not puzzle.check_complete():
