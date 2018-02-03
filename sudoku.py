@@ -19,7 +19,7 @@
 #       (желательно наиболее заполненную) для повтора ветвления).
 #       Следует так же иметь в виду, что головолома может оказаться В ПРИНЦИПЕ нерешаемой,
 #       хотя и будет проходить обычные проверки.
-import copy  # Для борьбы с главными граблями Python'а!
+import copy  # To combat the main Python's rake!
 
 
 class Puzzle:
@@ -29,9 +29,10 @@ class Puzzle:
         self.size = x * y
         self.chars = chars
         self.field = [['0' for i in range(self.size)] for j in range(self.size)]
+        # Первоначальное заполнение массива возможных значений
         self.possibles = [[set(chars) for i in range(self.size)] for j in range(self.size)]
         arr = []
-        # Базовая проверка головоломки
+        # Basic puzzle check
         for i in line.split():
             arr.append(i)
         if len(arr) != self.size:
@@ -44,7 +45,7 @@ class Puzzle:
                     exit('In the cell [' + str(i + 1) + '][' + str(j + 1) + '] an invalid character was found: ' +
                          str(arr[i][j]) + '. EXIT.')
                 if arr[i][j] != '0':
-                    # Если ничего не мешает, установить значение
+                    # If all correct: set char
                     self.set_num(i, j, arr[i][j])
 
     def show_possibles(self):
@@ -69,6 +70,9 @@ class Puzzle:
         for i in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
             for j in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
                 self.possibles[i][j].discard(char_ins)
+        # LOG:
+        # if rule_ins != '':
+        #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
     def check_complete(self):
         for i in range(self.size):
@@ -100,58 +104,6 @@ class Puzzle:
             if ((i + 1) % self.y) == 0 and (i != (self.size - 1)):
                 print('╟' + '─' * self.x + ('┼' + '─' * self.x) * (self.y - 1) + '╢')
         print('╚' + '═' * self.x + ('╧' + '═' * self.x) * (self.y - 1) + '╝')
-
-
-#
-# if len(arr) != X:
-#     exit('Неправильное количество строк! Прерывание.' + str(len(arr)))
-#
-# for i in range(X):
-#     if len(arr[i]) != X:
-#         exit('В строке ' + str(i + 1) + ' неправильное количество столбцов! Прерывание.')
-#
-# for i in range(X):
-#     for j in range(X):
-#         if arr[i][j] not in (chars + list('0')):
-#             exit('В ячейке [' + str(i + 1) + '][' + str(j + 1) + '] обнаружено недопустимое значение: ' + str(
-#                 arr[i][j]) + '. Прерывание.')
-
-# def output_puzzle():  # Вывод таблицы с головоломкой
-#     print('╔' + '═' * x + ('╤' + '═' * x) * (y - 1) + '╗')
-#     for i in range(X):
-#         print('║', end='')
-#         for j in range(X):
-#             if arr[i][j] == '0':
-#                 print(' ', end='')
-#             else:
-#                 print(arr[i][j], end='')
-#             if (((j + 1) % x) == 0) and (j != (X - 1)):
-#                 print('│', end='')
-#         print('║')
-#         if ((i + 1) % y) == 0 and (i != (X - 1)):
-#             print('╟' + '─' * x + ('┼' + '─' * x) * (y - 1) + '╢')
-#     print('╚' + '═' * x + ('╧' + '═' * x) * (y - 1) + '╝')
-
-# def show_possibles():  # Вывод возможных значений (для отладки)
-#     for i in range(X):
-#         for j in range(X):
-#             print(' ' * j, end='')
-#             print(possibles[i][j], end='')
-#             print('\t\t\t\t\t//' + str(len(possibles[i][j])))
-
-# def set_num(x_ins, y_ins, num_ins, rule_ins=''):  # Установка значения в поле
-#     arr[x_ins][y_ins] = num_ins
-#     possibles[x_ins][y_ins] = set()
-#     for i in range(X):
-#         possibles[i][y_ins].discard(num_ins)
-#         possibles[x_ins][i].discard(num_ins)
-#     for i in range(((x_ins // y) * y), ((x_ins // y + 1) * y)):
-#         for j in range(((y_ins // x) * x), ((y_ins // x + 1) * x)):
-#             possibles[i][j].discard(num_ins)
-
-# СНЯТЬ КОММЕНТАРИИ СО СЛЕДУЮЩИХ ДВУХ СТРОК ДЛЯ ВЫВОДА ЛОГА
-#    if rule_ins != '':
-#        print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
 # x, y, chars = 2, 2, list('1234')
 # line = '0001 1000 0003 2000'
@@ -232,22 +184,7 @@ line = '050047001 000000708 804601050 103700000 000405000 000002406 020503904 40
 puzzle = Puzzle(x, y, chars, line)
 print('Головоломка:')
 puzzle.output_puzzle()
-# output_puzzle()
 # ПАУЗА ПЕРЕД ВЫВОДОМ ЛОГА
-# input('Enter для продолжения')
-
-# Первоначальное заполнение массива возможных значений
-# possibles = [[set(chars) for i in range(X)] for j in range(X)]
-# for i in range(X):
-#     for j in range(X):
-#         if arr[i][j] != '0':
-#             set_num(x_ins=i, y_ins=j, num_ins=arr[i][j])
-# print('===================================')
-
-# show_possibles()
-
-
-# for z in range(30):
 field_test = []
 possibles_test = []
 while not puzzle.check_complete():
@@ -257,41 +194,40 @@ while not puzzle.check_complete():
         for i in range(puzzle.size):
             for j in range(puzzle.size):
                 for c in puzzle.possibles[i][j]:
-                    # Проверка, что в ячейку можно поставить только одно значение
+                    # Check: only one possible char in cell?
                     if len(puzzle.possibles[i][j]) == 1:
                         puzzle.set_num(i, j, c)  # , rule_ins='only one num possible in cell')
-                        continue
-                    # Обнаружение единственного возможного места для цифры в строке
+                        break
+                    # Check: only one possible place for char in string?
                     b = False
                     for l in range(puzzle.size):
                         if l != j:
                             b = b or puzzle.possibles[i][l].issuperset(c)
                     if not b:
                         puzzle.set_num(i, j, c)  # , rule_ins='only one place in string')
-                        continue
-                    # Обнаружение единственного возможного места для цифры в столбце
+                        break
+                    # Check: only one possible place for char in column?
                     b = False
                     for l in range(puzzle.size):
                         if l != i:
                             b = b or puzzle.possibles[l][j].issuperset(c)
                     if not b:
                         puzzle.set_num(i, j, c)  # , rule_ins='only one place in column')
-                        continue
-                    # Обнаружение единственного возможного места для цифры в ячейке x*y
+                        break
+                    # Check: only one possible place for char in area x*y?
                     b = False
-                    for l in range(((i // y) * y), ((i // y + 1) * y)):
-                        for m in range(((j // x) * x), ((j // x + 1) * x)):
+                    for l in range(((i // puzzle.y) * puzzle.y), ((i // puzzle.y + 1) * puzzle.y)):
+                        for m in range(((j // puzzle.x) * puzzle.x), ((j // puzzle.x + 1) * puzzle.x)):
                             if l != i or j != m:
                                 b = b or puzzle.possibles[l][m].issuperset(c)
                     if not b:
                         puzzle.set_num(i, j, c)  # , rule_ins='only one place in area')
-                        continue
+                        break
     else:
         break
 if not puzzle.check_complete():
     print('Решить головоломку не получилось, вот, что получилось найти:')
     puzzle.output_puzzle()
-    print('"', puzzle.return_line(), '"', sep='')
     # puzzle.show_possibles()
 else:
     print('Головоломка решена! Ответ:')
