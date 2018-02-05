@@ -75,9 +75,12 @@ class Puzzle:
         #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
     def check_complete(self):
-        for i in range(self.size):
-            for j in range(self.size):
-                if self.field[i][j] == '0':
+        # for i in range(self.size):
+        #     for j in range(self.size):
+        #         if self.field[i][j] == '0':
+        for i in self.field:
+            for j in i:
+                if j == '0':
                     return False
         return True
 
