@@ -23,7 +23,7 @@ import copy  # To combat the main Python's rake!
 
 
 class Puzzle:
-    def __init__(self, x, y, chars, line):
+    def __init__(self, x, y, chars, puzzle_line):
         self.x = x
         self.y = y
         self.size = x * y
@@ -33,7 +33,7 @@ class Puzzle:
         self.possibles = [[set(chars) for i in range(self.size)] for j in range(self.size)]
         arr = []
         # Basic puzzle check
-        for i in line.split():
+        for i in puzzle_line.split():
             arr.append(i)
         if len(arr) != self.size:
             exit('Wrong number of rows! EXIT.' + str(len(self.field)))
