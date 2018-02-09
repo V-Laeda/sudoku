@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-# TODO: Translate to lingua franca by PEP8
+# TODO: Translate to lingua franca by PEP8 (comments only)
 # TODO: продумать превращение содерждимого основного цикла в одну или несколько функций,
 #   вызываемых из более фундаментального цикла.
 # TODO: Строку нужно будет получать иначе - из файла, командной строки или интерактивно, туда же — проверку ввода.
@@ -28,8 +28,9 @@ class Puzzle:
         self.y = y
         self.size = x * y
         self.chars = chars
+        # Preparing field: doing array size×size of '0'
         self.field = [['0' for i in range(self.size)] for j in range(self.size)]
-        # Первоначальное заполнение массива возможных значений
+        # Preparing array of possible values: array size×size of sets with all possible chars
         self.possibles = [[set(chars) for i in range(self.size)] for j in range(self.size)]
         arr = []
         # Basic puzzle check
@@ -199,32 +200,32 @@ while not puzzle.check_complete():
                 for c in puzzle.possibles[i][j]:
                     # Check: only one possible char in cell?
                     if len(puzzle.possibles[i][j]) == 1:
-                        puzzle.set_num(i, j, c)  # , rule_ins='only one num possible in cell')
+                        puzzle.set_num(i, j, c)  # , rule='one char')
                         break
                     # Check: only one possible place for char in string?
                     b = False
                     for l in range(puzzle.size):
                         if l != j:
-                            b = b or puzzle.possibles[i][l].issuperset(c)
+                            b = b or (c in puzzle.possibles[i][l])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule_ins='only one place in string')
+                        puzzle.set_num(i, j, c)  # , rule='string')
                         break
                     # Check: only one possible place for char in column?
                     b = False
                     for l in range(puzzle.size):
                         if l != i:
-                            b = b or puzzle.possibles[l][j].issuperset(c)
+                            b = b or (c in puzzle.possibles[l][j])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule_ins='only one place in column')
+                        puzzle.set_num(i, j, c)  # , rule='column')
                         break
                     # Check: only one possible place for char in area x*y?
                     b = False
                     for l in range(((i // puzzle.y) * puzzle.y), ((i // puzzle.y + 1) * puzzle.y)):
                         for m in range(((j // puzzle.x) * puzzle.x), ((j // puzzle.x + 1) * puzzle.x)):
                             if l != i or j != m:
-                                b = b or puzzle.possibles[l][m].issuperset(c)
+                                b = b or (c in puzzle.possibles[l][m])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule_ins='only one place in area')
+                        puzzle.set_num(i, j, c)  # , rule='area')
                         break
     else:
         break
