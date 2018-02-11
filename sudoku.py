@@ -23,10 +23,10 @@ import copy  # To combat the main Python's rake!
 
 
 class Puzzle:
-    def __init__(self, x, y, chars, puzzle_line):
-        self.x = x
-        self.y = y
-        self.size = x * y
+    def __init__(self, x_size, y_size, chars, puzzle_line):
+        self.x = x_size
+        self.y = y_size
+        self.size = x_size * y_size
         self.chars = chars
         # Preparing field: doing array size×size of '0'
         self.field = [['0' for i in range(self.size)] for j in range(self.size)]
@@ -34,27 +34,27 @@ class Puzzle:
         self.possibles = [[set(chars) for i in range(self.size)] for j in range(self.size)]
         arr = []
         # Basic puzzle check
-        for i in puzzle_line.split():
-            arr.append(i)
+        for i1 in puzzle_line.split():
+            arr.append(i1)
         if len(arr) != self.size:
-            exit('Wrong number of rows! EXIT.' + str(len(self.field)))
-        for i in range(self.size):
-            if len(arr[i]) != self.size:
-                exit('In row ' + str(i + 1) + ' wrong number of columns! EXIT.')
-            for j in range(self.size):
-                if arr[i][j] not in (self.chars + list('0')):
-                    exit('In the cell [' + str(i + 1) + '][' + str(j + 1) + '] an invalid character was found: ' +
-                         str(arr[i][j]) + '. EXIT.')
-                if arr[i][j] != '0':
+            exit('Неправильное количество строк! ВЫХОД.' + str(len(self.field)))
+        for i1 in range(self.size):
+            if len(arr[i1]) != self.size:
+                exit('В строке ' + str(i1 + 1) + ' неправильное количество столбцов! ВЫХОД.')
+            for j1 in range(self.size):
+                if arr[i1][j1] not in (self.chars + list('0')):
+                    exit('В ячейке [' + str(i1 + 1) + '][' + str(j1 + 1) + '] обнаружен недопустимый символ: ' +
+                         str(arr[i1][j1]) + '. ВЫХОД.')
+                if arr[i1][j1] != '0':
                     # If all correct: set char
-                    self.set_num(i, j, arr[i][j])
+                    self.set_num(i1, j1, arr[i1][j1])
 
     def show_possibles(self):
-        for i in range(self.size):
-            for j in range(self.size):
-                print(' ' * j, end='')
-                print(self.possibles[i][j], end='')
-                print('\t\t\t\t\t//' + str(len(self.possibles[i][j])))
+        for i2 in range(self.size):
+            for j2 in range(self.size):
+                print(' ' * j2, end='')
+                print(self.possibles[i2][j2], end='')
+                print('\t\t\t\t\t//' + str(len(self.possibles[i2][j2])))
 
     def set_num(self, x_ins, y_ins, char_ins):
         if self.field[x_ins][y_ins] != '0' or (char_ins not in self.possibles[x_ins][y_ins]):
@@ -62,34 +62,31 @@ class Puzzle:
             print(self.field)
             print(self.possibles)
             print(x_ins, y_ins, char_ins)
-            exit('Puzzle has errors!')
+            exit('Головоломка содержит ошибки!')
         self.field[x_ins][y_ins] = char_ins
         self.possibles[x_ins][y_ins] = set()
-        for i in range(self.size):
-            self.possibles[i][y_ins].discard(char_ins)
-            self.possibles[x_ins][i].discard(char_ins)
-        for i in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
-            for j in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
-                self.possibles[i][j].discard(char_ins)
+        for i3 in range(self.size):
+            self.possibles[i3][y_ins].discard(char_ins)
+            self.possibles[x_ins][i3].discard(char_ins)
+        for i3 in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
+            for j3 in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
+                self.possibles[i3][j3].discard(char_ins)
         # LOG:
         # if rule_ins != '':
         #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
     def check_complete(self):
-        # for i in range(self.size):
-        #     for j in range(self.size):
-        #         if self.field[i][j] == '0':
-        for i in self.field:
-            for j in i:
-                if j == '0':
+        for i4 in self.field:
+            for j4 in i4:
+                if j4 == '0':
                     return False
         return True
 
     def return_line(self):
         newline = ''
-        for i in self.field:
-            for j in i:
-                newline += j
+        for i5 in self.field:
+            for j5 in i5:
+                newline += j5
             newline += ' '
         return newline[:-1]
 
@@ -188,19 +185,17 @@ puzzle = Puzzle(3, 3, list('123456789'), line)
 
 print('Головоломка:')
 puzzle.output_puzzle()
-# ПАУЗА ПЕРЕД ВЫВОДОМ ЛОГА
 field_test = []
 possibles_test = []
 while not puzzle.check_complete():
-    if puzzle.field != field_test or puzzle.possibles != possibles_test:
+    if puzzle.field != field_test:  # or puzzle.possibles != possibles_test:
         field_test = copy.deepcopy(puzzle.field)
-        possibles_test = copy.deepcopy(puzzle.possibles)
         for i in range(puzzle.size):
             for j in range(puzzle.size):
                 for c in puzzle.possibles[i][j]:
                     # Check: only one possible char in cell?
                     if len(puzzle.possibles[i][j]) == 1:
-                        puzzle.set_num(i, j, c)  # , rule='one char')
+                        puzzle.set_num(i, j, c)  # , r='one char')
                         break
                     # Check: only one possible place for char in string?
                     b = False
@@ -208,7 +203,7 @@ while not puzzle.check_complete():
                         if l != j:
                             b = b or (c in puzzle.possibles[i][l])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule='string')
+                        puzzle.set_num(i, j, c)  # , r='string')
                         break
                     # Check: only one possible place for char in column?
                     b = False
@@ -216,7 +211,7 @@ while not puzzle.check_complete():
                         if l != i:
                             b = b or (c in puzzle.possibles[l][j])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule='column')
+                        puzzle.set_num(i, j, c)  # , r='column')
                         break
                     # Check: only one possible place for char in area x*y?
                     b = False
@@ -225,14 +220,19 @@ while not puzzle.check_complete():
                             if l != i or j != m:
                                 b = b or (c in puzzle.possibles[l][m])
                     if not b:
-                        puzzle.set_num(i, j, c)  # , rule='area')
+                        puzzle.set_num(i, j, c)  # , r='area')
                         break
     else:
-        break
-if not puzzle.check_complete():
-    print('Решить головоломку не получилось, вот, что получилось найти:')
-    puzzle.output_puzzle()
-    # puzzle.show_possibles()
-else:
+        possibles_test = copy.deepcopy(puzzle.possibles)
+        # Removing possibles without setting char in one cell will be here.
+        if possibles_test == puzzle.possibles:
+            break
+        else:
+            continue
+if puzzle.check_complete():
     print('Головоломка решена! Ответ:')
     puzzle.output_puzzle()
+else:
+    print('Решить головоломку не получилось, вот, что получилось найти:')
+    puzzle.output_puzzle()
+    puzzle.show_possibles()
