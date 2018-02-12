@@ -29,9 +29,9 @@ class Puzzle:
         self.size = x_size * y_size
         self.chars = chars
         # Preparing field: doing array size×size of '0'
-        self.field = [['0' for i in range(self.size)] for j in range(self.size)]
+        self.field = [['0' for i1 in range(self.size)] for j1 in range(self.size)]
         # Preparing array of possible values: array size×size of sets with all possible chars
-        self.possibles = [[set(chars) for i in range(self.size)] for j in range(self.size)]
+        self.possibles = [[set(chars) for i1 in range(self.size)] for j1 in range(self.size)]
         arr = []
         # Basic puzzle check
         for i1 in puzzle_line.split():
@@ -50,11 +50,10 @@ class Puzzle:
                     self.set_num(i1, j1, arr[i1][j1])
 
     def show_possibles(self):
-        for i2 in range(self.size):
-            for j2 in range(self.size):
-                print(' ' * j2, end='')
-                print(self.possibles[i2][j2], end='')
-                print('\t\t\t\t\t//' + str(len(self.possibles[i2][j2])))
+        for i1 in range(self.size):
+            for j1 in range(self.size):
+                string = ' ' * j1 + str(self.possibles[i1][j1]) + '\t//' + str(len(self.possibles[i1][j1]))
+                print(string.expandtabs(50))
 
     def set_num(self, x_ins, y_ins, char_ins):
         if self.field[x_ins][y_ins] != '0' or (char_ins not in self.possibles[x_ins][y_ins]):
@@ -65,44 +64,44 @@ class Puzzle:
             exit('Головоломка содержит ошибки!')
         self.field[x_ins][y_ins] = char_ins
         self.possibles[x_ins][y_ins] = set()
-        for i3 in range(self.size):
-            self.possibles[i3][y_ins].discard(char_ins)
-            self.possibles[x_ins][i3].discard(char_ins)
-        for i3 in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
-            for j3 in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
-                self.possibles[i3][j3].discard(char_ins)
+        for i1 in range(self.size):
+            self.possibles[i1][y_ins].discard(char_ins)
+            self.possibles[x_ins][i1].discard(char_ins)
+        for i1 in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
+            for j1 in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
+                self.possibles[i1][j1].discard(char_ins)
         # LOG:
         # if rule_ins != '':
         #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
     def check_complete(self):
-        for i4 in self.field:
-            for j4 in i4:
-                if j4 == '0':
+        for i1 in self.field:
+            for j1 in i1:
+                if j1 == '0':
                     return False
         return True
 
     def return_line(self):
         newline = ''
-        for i5 in self.field:
-            for j5 in i5:
-                newline += j5
+        for i1 in self.field:
+            for j1 in i1:
+                newline += j1
             newline += ' '
         return newline[:-1]
 
     def output_puzzle(self):
         print('╔' + '═' * self.x + ('╤' + '═' * self.x) * (self.y - 1) + '╗')
-        for i in range(self.size):
+        for i1 in range(self.size):
             print('║', end='')
-            for j in range(self.size):
-                if self.field[i][j] == '0':
+            for j1 in range(self.size):
+                if self.field[i1][j1] == '0':
                     print(' ', end='')
                 else:
-                    print(self.field[i][j], end='')
-                if (((j + 1) % self.x) == 0) and (j != (self.size - 1)):
+                    print(self.field[i1][j1], end='')
+                if (((j1 + 1) % self.x) == 0) and (j1 != (self.size - 1)):
                     print('│', end='')
             print('║')
-            if ((i + 1) % self.y) == 0 and (i != (self.size - 1)):
+            if ((i1 + 1) % self.y) == 0 and (i1 != (self.size - 1)):
                 print('╟' + '─' * self.x + ('┼' + '─' * self.x) * (self.y - 1) + '╢')
         print('╚' + '═' * self.x + ('╧' + '═' * self.x) * (self.y - 1) + '╝')
 
@@ -235,4 +234,4 @@ if puzzle.check_complete():
 else:
     print('Решить головоломку не получилось, вот, что получилось найти:')
     puzzle.output_puzzle()
-    puzzle.show_possibles()
+    # puzzle.show_possibles()
