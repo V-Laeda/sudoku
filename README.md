@@ -24,4 +24,3 @@
 
 ## Запуск
     $ python3 sudoku.py
-tst
