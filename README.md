@@ -1,4 +1,6 @@
 # SUDOKU Solver
+> English version of README will be available soon
+
 > Программа для решения головоломок Sudoku на языке Python.
 
 ## Подготовка
