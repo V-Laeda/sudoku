@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import task
 
 # TODO: Translate to lingua franca by PEP8 (comments only)
 # TODO: Add  lingua franca version of README.md
@@ -143,7 +144,7 @@ class Puzzle:
                 print('╟' + '─' * self.x + ('┼' + '─' * self.x) * (self.y - 1) + '╢')
         print('╚' + '═' * self.x + ('╧' + '═' * self.x) * (self.y - 1) + '╝')
 
-import task
+
 puzzle = Puzzle(task.x_size, task.y_size, task.chars, task.puzzle_line)
 
 print(puzzle.check_puzzle())
