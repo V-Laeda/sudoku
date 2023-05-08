@@ -113,9 +113,9 @@ class Puzzle:
             for i in range(self.y):
                 for j in range(self.x):
                     b = False
-                    for l in range(i * self.x, i * self.x + self.x):
-                        for m in range(j * self.y, j * self.y + self.y):
-                            b = b or ((c in self.possibles[m][l]) or (self.field[m][l] == c))
+                    for m in range(i * self.x, i * self.x + self.x):
+                        for n in range(j * self.y, j * self.y + self.y):
+                            b = b or ((c in self.possibles[n][m]) or (self.field[n][m] == c))
                     if not b:
                         return 'Error_4'
         return 'Normal'
@@ -164,26 +164,26 @@ while not puzzle.check_complete():
                         break
                     # Check: only one possible place for char in string?
                     b = False
-                    for l in range(puzzle.size):
-                        if l != j:
-                            b = b or (c in puzzle.possibles[i][l])
+                    for m in range(puzzle.size):
+                        if m != j:
+                            b = b or (c in puzzle.possibles[i][m])
                     if not b:
                         puzzle.set_char(i, j, c)  # , r='string')
                         break
                     # Check: only one possible place for char in column?
                     b = False
-                    for l in range(puzzle.size):
-                        if l != i:
-                            b = b or (c in puzzle.possibles[l][j])
+                    for m in range(puzzle.size):
+                        if m != i:
+                            b = b or (c in puzzle.possibles[m][j])
                     if not b:
                         puzzle.set_char(i, j, c)  # , r='column')
                         break
                     # Check: only one possible place for char in area x*y?
                     b = False
-                    for l in range(((i // puzzle.y) * puzzle.y), ((i // puzzle.y + 1) * puzzle.y)):
-                        for m in range(((j // puzzle.x) * puzzle.x), ((j // puzzle.x + 1) * puzzle.x)):
-                            if l != i or j != m:
-                                b = b or (c in puzzle.possibles[l][m])
+                    for m in range(((i // puzzle.y) * puzzle.y), ((i // puzzle.y + 1) * puzzle.y)):
+                        for n in range(((j // puzzle.x) * puzzle.x), ((j // puzzle.x + 1) * puzzle.x)):
+                            if m != i or j != n:
+                                b = b or (c in puzzle.possibles[m][n])
                     if not b:
                         puzzle.set_char(i, j, c)  # , r='area')
                         break
