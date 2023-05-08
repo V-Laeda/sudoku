@@ -104,8 +104,8 @@ class Puzzle:
                 b1 = False
                 b2 = False
                 for j in range(self.size):
-                    b1 = b1 or ((c in self.possibles[i][j]) or (self.field[i][j]==c))
-                    b2 = b2 or ((c in self.possibles[j][i]) or (self.field[j][i]==c))
+                    b1 = b1 or ((c in self.possibles[i][j]) or (self.field[i][j] == c))
+                    b2 = b2 or ((c in self.possibles[j][i]) or (self.field[j][i] == c))
                 if not b1:
                     return 'Error_2'
                 if not b2:
