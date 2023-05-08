@@ -4,6 +4,7 @@ import task
 
 # TODO: Translate to lingua franca by PEP8 (comments only)
 # TODO: Add  lingua franca version of README.md
+# TODO: Internationalize it
 # TODO: продумать превращение содерждимого основного цикла в одну или несколько функций,
 #   вызываемых из более фундаментального цикла.
 # TODO: Строку нужно будет получать иначе - из файла, командной строки или интерактивно, туда же — проверку ввода.
