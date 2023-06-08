@@ -147,7 +147,6 @@ class Puzzle:
 
 puzzle = Puzzle(task.x_size, task.y_size, task.chars, task.puzzle_line)
 
-print(puzzle.check_puzzle())
 print('Головоломка:')
 puzzle.output_puzzle()
 field_test = []
