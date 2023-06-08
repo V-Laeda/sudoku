@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 import task
+from copy import deepcopy
 
 # TODO: Translate to lingua franca by PEP8 (comments only)
 # TODO: Add  lingua franca version of README.md
@@ -23,7 +24,6 @@ import task
 #       (желательно наиболее заполненную) для повтора ветвления).
 #       Следует так же иметь в виду, что головолома может оказаться В ПРИНЦИПЕ нерешаемой,
 #       хотя и будет проходить обычные проверки.
-from copy import deepcopy
 
 
 class Puzzle:
