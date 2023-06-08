@@ -41,14 +41,13 @@ class Puzzle:
         for line in puzzle_line.split():
             arr.append(line)
         if len(arr) != self.size:
-            exit('Неправильное количество строк! ВЫХОД.' + str(len(self.field)))
+            exit(f'Неправильное количество строк: { len(arr) } вместо { self.size }! ВЫХОД.')
         for i in range(self.size):
             if len(arr[i]) != self.size:
-                exit('В строке ' + str(i + 1) + ' неправильное количество столбцов! ВЫХОД.')
+                exit(f'В строке { i+1 } неправильное количество столбцов: { len(arr[i]) } вместо { self.size }! ВЫХОД.')
             for j in range(self.size):
                 if arr[i][j] not in (self.chars + list('0')):
-                    exit('В ячейке [' + str(i + 1) + '][' + str(j + 1) + '] обнаружен недопустимый символ: ' +
-                         str(arr[i][j]) + '. ВЫХОД.')
+                    exit(f'В ячейке { i+1 }:{ j+1 } обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.')
                 if arr[i][j] != '0':
                     # If all correct: set char
                     self.set_char(i, j, arr[i][j])
