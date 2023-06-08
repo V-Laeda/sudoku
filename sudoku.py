@@ -38,8 +38,8 @@ class Puzzle:
         self.possibles = [[set(chars) for i1 in range(self.size)] for j1 in range(self.size)]
         arr = []
         # Basic puzzle check
-        for i in puzzle_line.split():
-            arr.append(i)
+        for line in puzzle_line.split():
+            arr.append(line)
         if len(arr) != self.size:
             exit('Неправильное количество строк! ВЫХОД.' + str(len(self.field)))
         for i in range(self.size):
@@ -99,13 +99,13 @@ class Puzzle:
                 if self.field[i][j] == '0' and len(self.possibles[i][j]) == 0:
                     return 'Error_1'
         # Checking for each char set or have possibles in each string and column and area x*y
-        for c in self.chars:
+        for char in self.chars:
             for i in range(self.size):
                 b1 = False
                 b2 = False
                 for j in range(self.size):
-                    b1 = b1 or ((c in self.possibles[i][j]) or (self.field[i][j] == c))
-                    b2 = b2 or ((c in self.possibles[j][i]) or (self.field[j][i] == c))
+                    b1 = b1 or ((char in self.possibles[i][j]) or (self.field[i][j] == char))
+                    b2 = b2 or ((char in self.possibles[j][i]) or (self.field[j][i] == char))
                 if not b1:
                     return 'Error_2'
                 if not b2:
@@ -116,7 +116,7 @@ class Puzzle:
                     b = False
                     for m in range(i * self.x, i * self.x + self.x):
                         for n in range(j * self.y, j * self.y + self.y):
-                            b = b or ((c in self.possibles[n][m]) or (self.field[n][m] == c))
+                            b = b or ((char in self.possibles[n][m]) or (self.field[n][m] == char))
                     if not b:
                         return 'Error_4'
         return 'Normal'
