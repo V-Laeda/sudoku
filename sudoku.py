@@ -77,13 +77,6 @@ class Puzzle:
         # if rule_ins != '':
         #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
 
-    def check_complete(self):
-        for i in self.field:
-            for j in i:
-                if j == '0':
-                    return False
-        return True
-
     def check_puzzle(self):
         # Checking for complete!
         b = False
@@ -151,7 +144,7 @@ print('Головоломка:')
 puzzle.output_puzzle()
 field_test = []
 possibles_test = []
-while not puzzle.check_complete():
+while puzzle.check_puzzle() == "Normal":
     if puzzle.field != field_test:  # or puzzle.possibles != possibles_test:
         field_test = deepcopy(puzzle.field)
         for i in range(puzzle.size):
@@ -193,7 +186,7 @@ while not puzzle.check_complete():
             break
         else:
             continue
-if puzzle.check_complete():
+if puzzle.check_puzzle() == "Complete":
     print('Головоломка решена! Ответ:')
     puzzle.output_puzzle()
 else:
