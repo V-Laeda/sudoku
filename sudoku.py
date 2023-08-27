@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import task
 from copy import deepcopy
+from task import X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE
 
 # TODO: Translate to lingua franca by PEP8 (comments only)
 # TODO: Add  lingua franca version of README.md
@@ -138,7 +138,7 @@ class Puzzle:
         print('╚' + '═' * self.x + ('╧' + '═' * self.x) * (self.y - 1) + '╝')
 
 
-puzzle = Puzzle(task.x_size, task.y_size, task.chars, task.puzzle_line)
+puzzle = Puzzle(X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE)
 
 print('Головоломка:')
 puzzle.output_puzzle()
