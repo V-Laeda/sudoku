@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import sys
 from copy import deepcopy
 from task import X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE
 
@@ -43,14 +44,14 @@ class Puzzle:
         for line in puzzle_line.split():
             arr.append(line)
         if len(arr) != self.size:
-            exit(f'Неправильное количество строк: { len(arr) } вместо { self.size }! ВЫХОД.')
+            sys.exit(f'Неправильное количество строк: { len(arr) } вместо { self.size }! ВЫХОД.')
         for i in range(self.size):
             if len(arr[i]) != self.size:
-                exit(f"В строке {i + 1} неправильное количество столбцов: " +
-                     f"{ len(arr[i]) } вместо { self.size }! ВЫХОД.")
+                sys.exit(f"В строке {i + 1} неправильное количество столбцов: " +
+                         f"{ len(arr[i]) } вместо { self.size }! ВЫХОД.")
             for j in range(self.size):
                 if arr[i][j] not in (self.chars + list('0')):
-                    exit(f'В ячейке { i+1 }:{ j+1 } обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.')
+                    sys.exit(f'В ячейке { i+1 }:{ j+1 } обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.')
                 if arr[i][j] != '0':
                     # If all correct: set char
                     self.set_char(i, j, arr[i][j])
@@ -67,7 +68,7 @@ class Puzzle:
             print(self.field)
             print(self.possibles)
             print(x_ins, y_ins, char_ins)
-            exit('Головоломка содержит ошибки!')
+            sys.exit('Головоломка содержит ошибки!')
         self.field[x_ins][y_ins] = char_ins
         self.possibles[x_ins][y_ins] = set()
         for i in range(self.size):
