@@ -178,10 +178,10 @@ while puzzle.check_puzzle() == "Normal":
                         break
                     # Check: only one possible place for char in area x*y?
                     b = False
-                    for m in range(((i // puzzle.y) * puzzle.y), ((i // puzzle.y + 1) * puzzle.y)):
-                        for n in range(((j // puzzle.x) * puzzle.x), ((j // puzzle.x + 1) * puzzle.x)):
-                            if m != i or j != n:
-                                b = b or (c in puzzle.possibles[m][n])
+                    for m in range(((i // puzzle.y) * puzzle.y),
+                                   ((i // puzzle.y + 1) * puzzle.y)):
+                        for n in range(((j // puzzle.x) * puzzle.x),
+                                       ((j // puzzle.x + 1) * puzzle.x)):
                     if not b:
                         puzzle.set_char(i, j, c)  # , r='area')
                         break
