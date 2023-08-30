@@ -60,7 +60,7 @@ class Puzzle:
         for i in range(self.size):
             for j in range(self.size):
                 string = f"{ i+1:2 } * { j+1:2 } | { len(self.possibles[i][j]) } | { self.possibles[i][j] }"
-                print(string.expandtabs(50))
+                print(string.expandtabs(75))
 
     def set_char(self, x_ins, y_ins, char_ins):
         if self.field[x_ins][y_ins] != '0' or (char_ins not in self.possibles[x_ins][y_ins]):
@@ -144,58 +144,61 @@ class Puzzle:
         print('╚' + '═' * self.x_size + ('╧' + '═' * self.x_size) * (self.y_size - 1) + '╝')
 
 
-puzzle = Puzzle(X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE)
+if __name__ == '__main__':
+    puzzle = Puzzle(X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE)
 
-print('Головоломка:')
-puzzle.output_puzzle()
-field_test = []
-possibles_test = []
-while puzzle.check_puzzle() == "Normal":
-    if puzzle.field != field_test:  # or puzzle.possibles != possibles_test:
-        field_test = deepcopy(puzzle.field)
-        for i in range(puzzle.size):
-            for j in range(puzzle.size):
-                for c in puzzle.possibles[i][j]:
-                    # Check: only one possible char in cell?
-                    if len(puzzle.possibles[i][j]) == 1:
-                        puzzle.set_char(i, j, c)  # , r='one char')
-                        break
-                    # Check: only one possible place for char in string?
-                    b = False
-                    for m in range(puzzle.size):
-                        if m != j:
-                            b = b or (c in puzzle.possibles[i][m])
-                    if not b:
-                        puzzle.set_char(i, j, c)  # , r='string')
-                        break
-                    # Check: only one possible place for char in column?
-                    b = False
-                    for m in range(puzzle.size):
-                        if m != i:
-                            b = b or (c in puzzle.possibles[m][j])
-                    if not b:
-                        puzzle.set_char(i, j, c)  # , r='column')
-                        break
-                    # Check: only one possible place for char in area x*y?
-                    b = False
-                    for m in range(((i // puzzle.y_size) * puzzle.y_size),
-                                   ((i // puzzle.y_size + 1) * puzzle.y_size)):
-                        for n in range(((j // puzzle.x_size) * puzzle.x_size),
-                                       ((j // puzzle.x_size + 1) * puzzle.x_size)):
-                    if not b:
-                        puzzle.set_char(i, j, c)  # , r='area')
-                        break
-    else:
-        possibles_test = deepcopy(puzzle.possibles)
-        # Removing possibles without setting char in one cell will be here.
-        if possibles_test == puzzle.possibles:
-            break
+    print('Головоломка:')
+    puzzle.output_puzzle()
+    field_test = []
+    possibles_test = []
+    while puzzle.check_puzzle() == "Normal":
+        if puzzle.field != field_test:  # or puzzle.possibles != possibles_test:
+            field_test = deepcopy(puzzle.field)
+            for i in range(puzzle.size):
+                for j in range(puzzle.size):
+                    for c in puzzle.possibles[i][j]:
+                        # Check: only one possible char in cell?
+                        if len(puzzle.possibles[i][j]) == 1:
+                            puzzle.set_char(i, j, c)  # , r='one char')
+                            break
+                        # Check: only one possible place for char in string?
+                        b = False
+                        for m in range(puzzle.size):
+                            if m != j:
+                                b = b or (c in puzzle.possibles[i][m])
+                        if not b:
+                            puzzle.set_char(i, j, c)  # , r='string')
+                            break
+                        # Check: only one possible place for char in column?
+                        b = False
+                        for m in range(puzzle.size):
+                            if m != i:
+                                b = b or (c in puzzle.possibles[m][j])
+                        if not b:
+                            puzzle.set_char(i, j, c)  # , r='column')
+                            break
+                        # Check: only one possible place for char in area x*y?
+                        b = False
+                        for m in range(((i // puzzle.y_size) * puzzle.y_size),
+                                       ((i // puzzle.y_size + 1) * puzzle.y_size)):
+                            for n in range(((j // puzzle.x_size) * puzzle.x_size),
+                                           ((j // puzzle.x_size + 1) * puzzle.x_size)):
+                                if m != i or j != n:
+                                    b = b or (c in puzzle.possibles[m][n])
+                        if not b:
+                            puzzle.set_char(i, j, c)  # , r='area')
+                            break
         else:
+            possibles_test = deepcopy(puzzle.possibles)
+            # Removing possibles without setting char in one cell will be here.
+            if possibles_test == puzzle.possibles:
+                break
             continue
-if puzzle.check_puzzle() == "Complete":
-    print('Головоломка решена! Ответ:')
-    puzzle.output_puzzle()
-else:
-    print('Решить головоломку не получилось, вот, что получилось найти:')
-    puzzle.output_puzzle()
-    # puzzle.show_possibles()
+    if puzzle.check_puzzle() == "Complete":
+        print('Головоломка решена! Ответ:')
+        puzzle.output_puzzle()
+    else:
+        print('Решить головоломку не получилось, вот, что получилось найти:')
+        puzzle.output_puzzle()
+        # puzzle.show_possibles()
+    input()
