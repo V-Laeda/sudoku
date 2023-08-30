@@ -59,7 +59,7 @@ class Puzzle:
     def show_possibles(self):
         for i in range(self.size):
             for j in range(self.size):
-                string = ' ' * j + str(self.possibles[i][j]) + '\t//' + str(len(self.possibles[i][j]))
+                string = f"{ i+1:2 } * { j+1:2 } | { len(self.possibles[i][j]) } | { self.possibles[i][j] }"
                 print(string.expandtabs(50))
 
     def set_char(self, x_ins, y_ins, char_ins):
@@ -81,7 +81,7 @@ class Puzzle:
                 self.possibles[i][j].discard(char_ins)
         # LOG:
         # if rule_ins != '':
-        #     print('Set ' + str(num_ins) + ' in [' + str(x_ins + 1) + '][' + str(y_ins + 1) + '] by rule ' + rule_ins)
+        #     print('Set {num_ins} in [{x_ins + 1}][{y_ins + 1}] by rule {rule_ins}')
 
     def check_puzzle(self):
         # Checking for complete!
