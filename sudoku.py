@@ -31,8 +31,8 @@ from task import X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE
 
 class Puzzle:
     def __init__(self, x_size, y_size, chars, puzzle_line):
-        self.x = x_size
-        self.y = y_size
+        self.x_size = x_size
+        self.y_size = y_size
         self.size = x_size * y_size
         self.chars = chars
         # Preparing field: doing array size×size of '0'
@@ -109,11 +109,11 @@ class Puzzle:
                 if not b2:
                     return 'Error_3'
             # Checking for each char set or have possibles in each area x*y
-            for i in range(self.y):
-                for j in range(self.x):
+            for i in range(self.y_size):
+                for j in range(self.x_size):
                     b = False
-                    for m in range(i * self.x, i * self.x + self.x):
-                        for n in range(j * self.y, j * self.y + self.y):
+                    for m in range(i * self.x_size, i * self.x_size + self.x_size):
+                        for n in range(j * self.y_size, j * self.y_size + self.y_size):
                             b = b or ((char in self.possibles[n][m]) or (self.field[n][m] == char))
                     if not b:
                         return 'Error_4'
@@ -128,7 +128,7 @@ class Puzzle:
         return newline[:-1]
 
     def output_puzzle(self):
-        print('╔' + '═' * self.x + ('╤' + '═' * self.x) * (self.y - 1) + '╗')
+        print('╔' + '═' * self.x_size + ('╤' + '═' * self.x_size) * (self.y_size - 1) + '╗')
         for i1 in range(self.size):
             print('║', end='')
             for j1 in range(self.size):
@@ -136,12 +136,12 @@ class Puzzle:
                     print(' ', end='')
                 else:
                     print(self.field[i1][j1], end='')
-                if (((j1 + 1) % self.x) == 0) and (j1 != (self.size - 1)):
+                if (((j1 + 1) % self.x_size) == 0) and (j1 != (self.size - 1)):
                     print('│', end='')
             print('║')
-            if ((i1 + 1) % self.y) == 0 and (i1 != (self.size - 1)):
-                print('╟' + '─' * self.x + ('┼' + '─' * self.x) * (self.y - 1) + '╢')
-        print('╚' + '═' * self.x + ('╧' + '═' * self.x) * (self.y - 1) + '╝')
+            if ((i1 + 1) % self.y_size) == 0 and (i1 != (self.size - 1)):
+                print('╟' + '─' * self.x_size + ('┼' + '─' * self.x_size) * (self.y_size - 1) + '╢')
+        print('╚' + '═' * self.x_size + ('╧' + '═' * self.x_size) * (self.y_size - 1) + '╝')
 
 
 puzzle = Puzzle(X_SIZE, Y_SIZE, CHARS, PUZZLE_LINE)
@@ -178,10 +178,10 @@ while puzzle.check_puzzle() == "Normal":
                         break
                     # Check: only one possible place for char in area x*y?
                     b = False
-                    for m in range(((i // puzzle.y) * puzzle.y),
-                                   ((i // puzzle.y + 1) * puzzle.y)):
-                        for n in range(((j // puzzle.x) * puzzle.x),
-                                       ((j // puzzle.x + 1) * puzzle.x)):
+                    for m in range(((i // puzzle.y_size) * puzzle.y_size),
+                                   ((i // puzzle.y_size + 1) * puzzle.y_size)):
+                        for n in range(((j // puzzle.x_size) * puzzle.x_size),
+                                       ((j // puzzle.x_size + 1) * puzzle.x_size)):
                     if not b:
                         puzzle.set_char(i, j, c)  # , r='area')
                         break
