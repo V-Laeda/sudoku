@@ -46,7 +46,8 @@ class Puzzle:
             exit(f'Неправильное количество строк: { len(arr) } вместо { self.size }! ВЫХОД.')
         for i in range(self.size):
             if len(arr[i]) != self.size:
-                exit(f'В строке { i+1 } неправильное количество столбцов: { len(arr[i]) } вместо { self.size }! ВЫХОД.')
+                exit(f"В строке {i + 1} неправильное количество столбцов: " +
+                     f"{ len(arr[i]) } вместо { self.size }! ВЫХОД.")
             for j in range(self.size):
                 if arr[i][j] not in (self.chars + list('0')):
                     exit(f'В ячейке { i+1 }:{ j+1 } обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.')
@@ -72,8 +73,10 @@ class Puzzle:
         for i in range(self.size):
             self.possibles[i][y_ins].discard(char_ins)
             self.possibles[x_ins][i].discard(char_ins)
-        for i in range(((x_ins // self.y) * self.y), ((x_ins // self.y + 1) * self.y)):
-            for j in range(((y_ins // self.x) * self.x), ((y_ins // self.x + 1) * self.x)):
+        for i in range((x_ins // self.y_size) * self.y_size,
+                       (x_ins // self.y_size + 1) * self.y_size):
+            for j in range(((y_ins // self.x_size) * self.x_size),
+                           ((y_ins // self.x_size + 1) * self.x_size)):
                 self.possibles[i][j].discard(char_ins)
         # LOG:
         # if rule_ins != '':
