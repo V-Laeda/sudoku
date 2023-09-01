@@ -60,7 +60,8 @@ class Puzzle:
                          f"{ len(arr[i]) } вместо { self.size }! ВЫХОД.")
             for j in range(self.size):
                 if arr[i][j] not in (self.chars + list('0')):
-                    sys.exit(f'В ячейке { i+1 }:{ j+1 } обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.')
+                    sys.exit(f"В ячейке { i+1 }:{ j+1 } " +
+                             f"обнаружен недопустимый символ: { arr[i][j] }. ВЫХОД.")
                 if arr[i][j] != '0':
                     # If all correct: set char
                     self.set_char(i, j, arr[i][j])
@@ -68,7 +69,8 @@ class Puzzle:
     def show_possibles(self):
         for i in range(self.size):
             for j in range(self.size):
-                string = f"{ i+1:2 } * { j+1:2 } | { len(self.possibles[i][j]) } | { self.possibles[i][j] }"
+                string = f"{ i+1:2 } * { j+1:2 } | " + \
+                    f"{ len(self.possibles[i][j]) } | { self.possibles[i][j] }"
                 print(string.expandtabs(75))
 
     def set_char(self, x_ins, y_ins, char_ins):
